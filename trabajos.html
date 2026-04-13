@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajos | Liliana Canto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #2d0b3a 0%, #4a154b 50%, #6b1a5e 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #ff66b2;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(145deg, #ff66b2, #ff3388);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .facultad h3 {
+            color: #ff99cc;
+            font-size: 0.9rem;
+        }
+
+        .facultad h2 {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a:hover {
+            background: #ff66b2;
+            color: #2d0b3a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: #ff99cc;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .unidad {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid #ff66b2;
+        }
+
+        .unidad-header {
+            background: linear-gradient(135deg, #ff3388, #cc0066);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .unidad-header h2 {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .unidad-header span {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .semana-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .semana-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1rem;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .semana-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff3388;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .semana-numero {
+            background: #ff3388;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .semana-titulo {
+            font-weight: bold;
+            color: #2d0b3a;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .semana-estado {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .estado-completado {
+            background: #4caf50;
+            color: white;
+        }
+
+        .estado-subido {
+            background: #2196f3;
+            color: white;
+        }
+
+        .estado-pendiente {
+            background: #ff9800;
+            color: white;
+        }
+
+        .repo-link {
+            display: inline-block;
+            margin-top: 0.8rem;
+            color: #ff3388;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #ff99cc;
+            border-top: 1px solid rgba(255, 102, 178, 0.3);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .semana-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 550px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        .modal-content h3 {
+            color: #ff3388;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content p {
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .modal-content a {
+            color: #ff3388;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .archivos-lista {
+            margin-top: 1rem;
+            text-align: left;
+            background: #f9eef7;
+            padding: 1rem;
+            border-radius: 1rem;
+        }
+
+        .archivos-lista h4 {
+            color: #6a2c70;
+            margin-bottom: 0.5rem;
+        }
+
+        .archivos-lista ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .archivos-lista li {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .archivos-lista a {
+            color: #ff3388;
+            word-break: break-all;
+        }
+
+        .close-modal {
+            background: #ff3388;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .badge-archivos {
+            display: inline-block;
+            background: #6a2c70;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-area">
+            <div class="logo">🏫</div>
+            <div class="facultad">
+                <h3>FACULTAD DE INGENIERÍA</h3>
+                <h2>Sistemas y Computación</h2>
+            </div>
+        </div>
+        <div class="nav-menu">
+            <a href="index.html">INICIO</a>
+            <a href="trabajos.html">TRABAJOS</a>
+            <a href="login.html">LOGIN</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1> PLAN DE ESTUDIOS - BASE DE DATOS II</h1>
+        <div id="unidades-container"></div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-titulo"></h3>
+            <p id="modal-descripcion"></p>
+            <div id="modal-archivos" class="archivos-lista"></div>
+            <div id="modal-enlace-container"></div>
+            <button class="close-modal" onclick="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <footer>© 2026 | Ingeniería de Sistemas | Portafolio Académico | Base de Datos II</footer>
+
+    <script>
+        // Estructura con los nombres que pediste
+        let trabajos = {
+            1: { nombre: "Unidad 1 - Optimización y Transacciones", semanas: {} },
+            2: { nombre: "Unidad 2 - Programación en Servidor", semanas: {} },
+            3: { nombre: "Unidad 3 - Bases de Datos NoSQL", semanas: {} },
+            4: { nombre: "Unidad 4 - Administración y Seguridad", semanas: {} }
+        };
+
+        function inicializarSemanas() {
+            for (let u = 1; u <= 4; u++) {
+                for (let s = 1; s <= 4; s++) {
+                    const semanaGlobal = (u-1)*4 + s;
+                    trabajos[u].semanas[semanaGlobal] = {
+                        titulo: `Semana ${semanaGlobal}`,
+                        descripcion: `Trabajo de la Semana ${semanaGlobal} - ${trabajos[u].nombre}`,
+                        enlace: "#",
+                        estado: "pendiente",
+                        archivos: []
+                    };
+                }
+            }
+        }
+
+        function cargarTrabajosDesdeLocal() {
+            const stored = localStorage.getItem('trabajos_estructura');
+            if (stored) {
+                trabajos = JSON.parse(stored);
+                // Asegurar que cada semana tenga array de archivos
+                for (let u = 1; u <= 4; u++) {
+                    if (trabajos[u]) {
+                        for (let s = 1; s <= 4; s++) {
+                            const semanaGlobal = (u-1)*4 + s;
+                            if (trabajos[u].semanas[semanaGlobal] && !trabajos[u].semanas[semanaGlobal].archivos) {
+                                trabajos[u].semanas[semanaGlobal].archivos = [];
+                            }
+                        }
+                    }
+                }
+            } else {
+                inicializarSemanas();
+                localStorage.setItem('trabajos_estructura', JSON.stringify(trabajos));
+            }
+        }
+
+        function getEstadoClass(estado) {
+            if (estado === 'completado') return 'estado-completado';
+            if (estado === 'subido') return 'estado-subido';
+            return 'estado-pendiente';
+        }
+
+        function getEstadoText(estado) {
+            if (estado === 'completado') return ' Completado';
+            if (estado === 'subido') return ' Subido';
+            return ' Pendiente';
+        }
+
+        function renderizarUnidades() {
+            const container = document.getElementById('unidades-container');
+            let html = '';
+
+            for (let u = 1; u <= 4; u++) {
+                const unidad = trabajos[u];
+                if (!unidad) continue;
+                html += `
+                    <div class="unidad">
+                        <div class="unidad-header" onclick="toggleUnidad(${u})">
+                            <h2>${unidad.nombre}</h2>
+                            <span id="arrow-${u}">▼</span>
+                        </div>
+                        <div id="unidad-${u}" class="semana-grid">
+                `;
+
+                for (let s = 1; s <= 4; s++) {
+                    const semanaGlobal = (u-1)*4 + s;
+                    const semana = unidad.semanas[semanaGlobal];
+                    if (semana) {
+                        const tieneArchivos = semana.archivos && semana.archivos.length > 0;
+                        html += `
+                            <div class="semana-card" onclick="verTrabajo(${u}, ${semanaGlobal})">
+                                <div class="semana-numero">${semanaGlobal}</div>
+                                <div class="semana-titulo">${semana.titulo}</div>
+                                <div class="semana-estado ${getEstadoClass(semana.estado)}">${getEstadoText(semana.estado)}</div>
+                                ${tieneArchivos ? `<div class="badge-archivos">📎 ${semana.archivos.length} archivo(s)</div>` : ''}
+                                ${semana.enlace && semana.enlace !== '#' ? `<a href="${semana.enlace}" class="repo-link" target="_blank" onclick="event.stopPropagation()">🔗 REP. GITHUB</a>` : '<span class="repo-link" style="color:#999;">📁 REP. GITHUB</span>'}
+                            </div>
+                        `;
+                    }
+                }
+
+                html += `</div></div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function toggleUnidad(unidadId) {
+            const div = document.getElementById(`unidad-${unidadId}`);
+            const arrow = document.getElementById(`arrow-${unidadId}`);
+            if (div.style.display === 'none') {
+                div.style.display = 'grid';
+                arrow.textContent = '▼';
+            } else {
+                div.style.display = 'none';
+                arrow.textContent = '▶';
+            }
+        }
+
+        function verTrabajo(unidad, semanaGlobal) {
+            const semana = trabajos[unidad].semanas[semanaGlobal];
+            
+            // Título
+            document.getElementById('modal-titulo').textContent = `${trabajos[unidad].nombre} - ${semana.titulo}`;
+            
+            // Descripción
+            document.getElementById('modal-descripcion').innerHTML = semana.descripcion || `Trabajo de la ${semana.titulo}`;
+            
+            // Enlace de GitHub
+            const enlaceContainer = document.getElementById('modal-enlace-container');
+            if (semana.enlace && semana.enlace !== '#') {
+                enlaceContainer.innerHTML = `<a href="${semana.enlace}" target="_blank" style="display:inline-block; margin:0.5rem 0;">🔗 Ver repositorio en GitHub</a>`;
+            } else {
+                enlaceContainer.innerHTML = '';
+            }
+            
+            // Archivos subidos
+            const archivosContainer = document.getElementById('modal-archivos');
+            if (semana.archivos && semana.archivos.length > 0) {
+                let archivosHTML = '<h4>📎 Archivos adjuntos:</h4><ul>';
+                semana.archivos.forEach(archivo => {
+                    const extension = archivo.nombre.split('.').pop().toLowerCase();
+                    let icono = '📄';
+                    if (extension === 'pdf') icono = '📑';
+                    if (extension === 'ppt' || extension === 'pptx') icono = '📊';
+                    if (extension === 'jpg' || extension === 'png' || extension === 'gif') icono = '🖼️';
+                    if (extension === 'zip') icono = '🗜️';
+                    
+                    archivosHTML += `
+                        <li>
+                            <span>${icono} ${archivo.nombre} (${Math.round(archivo.tamaño / 1024)} KB)</span>
+                            <div>
+                                <a href="${archivo.dataURL}" target="_blank">👁️ Ver</a> |
+                                <a href="${archivo.dataURL}" download="${archivo.nombre}">⬇️ Descargar</a>
+                            </div>
+                        </li>
+                    `;
+                });
+                archivosHTML += '</ul>';
+                archivosContainer.innerHTML = archivosHTML;
+            } else {
+                archivosContainer.innerHTML = '<p style="color:#999;">📂 No hay archivos adjuntos para esta semana</p>';
+            }
+            
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Cargar datos al iniciar
+        cargarTrabajosDesdeLocal();
+        renderizarUnidades();
+
+        // Escuchar cambios en localStorage (para actualizar en tiempo real si se edita desde admin)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'trabajos_estructura') {
+                cargarTrabajosDesdeLocal();
+                renderizarUnidades();
+            }
+        });
+    </script>
+</body>
+</html>
